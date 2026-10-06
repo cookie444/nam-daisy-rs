@@ -1,0 +1,16 @@
+[package]
+name = "nam-core-nostd"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "no_std, allocation-free Neural Amp Modeler inference core (WaveNet A1)."
+
+[features]
+default = []
+
+[dependencies]
+nam-namb = { workspace = true }
+libm = "0.2"

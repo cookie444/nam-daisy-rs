@@ -1,0 +1,5 @@
+/target
+**/*.rs.bk
+firmware/**/target
+*.namb
+*.staged.bin

@@ -1,0 +1,61 @@
+[package]
+name = "nam-pedal"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "Apache-2.0"
+description = "nam-daisy-rs firmware: real-time NAM WaveNet inference on the Electrosmith Daisy Seed."
+
+# Standalone embedded workspace (excluded from the host workspace).
+[workspace]
+
+[dependencies]
+nam-core-nostd = { path = "../../crates/nam-core-nostd" }
+nam-namb = { path = "../../crates/nam-namb" }
+nam-hal = { path = "../../crates/nam-hal" }
+
+daisy-embassy = { version = "=0.3.0" }
+embassy-executor = { version = "0.10.0", features = ["platform-cortex-m", "executor-thread", "defmt"] }
+embassy-time = { version = "0.5.1", features = ["defmt", "defmt-timestamp-uptime"] }
+embassy-sync = { version = "0.8.0", features = ["defmt"] }
+embassy-usb = "0.6.0"
+embassy-futures = "0.1.2"
+heapless = "0.8"
+cortex-m = { version = "0.7.7", features = ["inline-asm", "critical-section-single-core"] }
+cortex-m-rt = { version = "0.7.0", features = ["device"] }
+static_cell = "2.1.1"
+critical-section = "1.2.0"
+defmt = "1.0.1"
+defmt-rtt = "1.0.0"
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+libm = "0.2"
+
+[features]
+# Board revision selection is forwarded to daisy-embassy. The bring-up board is
+# a Daisy Seed Rev1.2 / Seed2-DFM (PCM3060, hardware mode), so that is default.
+# Note: Rev1.2 uses TX=Master / RX=Slave and requires start_callback to be
+# entered immediately (a delay overruns the RX ring buffer).
+default = ["seed_1_2"]
+# Load the model from QSPI (opt-in for bring-up: a non-responding QSPI can hang
+# the blocking driver before the executor schedules the LED task).
+qspi-model = []
+# Diagnostic: ignore input/model and emit a 440 Hz tone (output-path check).
+tone = []
+# Diagnostic: bypass the model and boost the raw input x8 (input-path check).
+probe-in = []
+# Diagnostic: boost the model output x4 (engine-output check).
+boost-model = []
+seed = ["daisy-embassy/seed"]
+seed_1_1 = ["daisy-embassy/seed_1_1"]
+seed_1_2 = ["daisy-embassy/seed_1_2"]
+seed3 = ["daisy-embassy/seed3"]
+patch_sm = ["daisy-embassy/patch_sm"]
+
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = 3
+overflow-checks = false

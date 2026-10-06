@@ -1,0 +1,31 @@
+nam-daisy-rs
+Copyright 2026 nam-daisy-rs contributors
+
+This product includes software adapted from:
+
+  NeuralAmpModeler-rs
+  Copyright (c) 2026 Fábio Henrique de Lima Silva (fhl.bsb@gmail.com)
+  Licensed under the Apache License, Version 2.0.
+  https://github.com/fabiohl/NeuralAmpModeler-rs
+
+  - The WaveNet A1 inference algorithm, `.namb` binary format definition,
+    weight-layout order, error-code mnemonics, and prewarm semantics were
+    adapted from this project.
+  - The committed golden fixtures under `crates/nam-parity/tests/fixtures/`
+    (`BossWN-nano.nam`, `golden_wavenet_nano*.bin`) are copied verbatim from
+    its `tests/fixtures/` directory.
+
+  NeuralAmpModelerCore (sdatkinson)
+  Apache License, Version 2.0
+  https://github.com/sdatkinson/NeuralAmpModelerCore
+  - The `.nam` model format and reference C++ numerics (oracle for the
+    golden fixtures above).
+
+  daisy-embassy
+  Copyright the daisy-embassy authors
+  MIT License
+  https://github.com/daisy-embassy/daisy-embassy
+  - Board support / audio interface used by the firmware crate.
+
+See `firmware/nam-pedal` for the embedded application and `docs/` for the
+frozen interfaces and gate trail.

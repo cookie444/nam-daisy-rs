@@ -1,0 +1,29 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/nam-namb",
+    "crates/nam-core-nostd",
+    "crates/nam-hal",
+    "crates/nam-parity",
+    "tools/nam-to-namb",
+]
+exclude = ["firmware/nam-pedal"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "Apache-2.0"
+repository = "https://github.com/example/nam-daisy-rs"
+authors = ["nam-daisy-rs contributors"]
+
+[workspace.dependencies]
+nam-namb = { path = "crates/nam-namb", default-features = false }
+nam-core-nostd = { path = "crates/nam-core-nostd", default-features = false }
+nam-hal = { path = "crates/nam-hal", default-features = false }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
